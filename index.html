@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search by Image and Text</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #82cafc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 150px;
+        }
+        .search-container input, .search-container button {
+            margin: 0 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .search-container button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .results-container .result {
+            margin: 20px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .results-container .result img {
+            max-width: 200px;
+            height: auto;
+
+        }
+        .results-container .result p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="text" name="search_text" placeholder="Search by text">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="results-container">
+            {% if image_search_results %}
+                {% for image_file in image_search_results %}
+                    <div class="result">
+                        <img src="{{ url_for('static', filename='images/' + image_file) }}" alt="{{ image_file }}">
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if text_search_results %}
+                {% for text_result in text_search_results %}
+                    <div class="result">
+                        <p>{{ text_result }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
